@@ -1,8 +1,9 @@
 #include <iostream>
 #include <string>
 #include <limits>
+#include <cstdlib>
 
-//Глобальные массивы
+//Р“Р»РѕР±Р°Р»СЊРЅС‹Рµ РјР°СЃСЃРёРІС‹
 int size = 10;
 int receiptSize = 1;
 int* idArr = new int[size];
@@ -16,12 +17,12 @@ template <typename Arr>
 void FillArr(Arr staticArr, Arr dinArr, int size);
 void ShowStorage();
 
-//Массивы для чека
+//РњР°СЃСЃРёРІС‹ РґР»СЏ С‡РµРєР°
 std::string* nameReceiptArr = new std::string[receiptSize];
 int* CountReceiptArr = new int[receiptSize];
 double* priceReceiptArr = new double[receiptSize];
 
-//основные функции
+//РѕСЃРЅРѕРІРЅС‹Рµ С„СѓРЅРєС†РёРё
 void ChangePrice();
 void Start();
 void Selling();
@@ -48,7 +49,7 @@ int main()
 
 void ShowStorage()
 {
-	std::cout << "ID\tНазвание товара\t\tКол-во\tЦена\n";
+	std::cout << "ID\tРќР°Р·РІР°РЅРёРµ С‚РѕРІР°СЂР°\t\tРљРѕР»-РІРѕ\tР¦РµРЅР°\n";
 	for (int i = 0; i < size; i++)
 	{
 		std::cout << idArr[i] << " " << nameArr[i] << "" << CountArr[i] << "  " << "\t" << priceArr[i] << "\n";
@@ -60,25 +61,25 @@ void ChangePrice()
 	double newPrice;
 	do
 	{
-		std::cout << "Введите Id товара для изменения цены: ";
+		std::cout << "Р’РІРµРґРёС‚Рµ Id С‚РѕРІР°СЂР° РґР»СЏ РёР·РјРµРЅРµРЅРёСЏ С†РµРЅС‹: ";
 		std::cin >> id;
 
 
-	} while (id < 1 || id > idArr[size - 1]);
-	std::cout << "\n\nВыбран товар: " << nameArr[id - 1] << " = " << priceArr[id - 1];
+	} while (id < 1 || id > idArr[size - 1] || id < 0);
+	std::cout << "\n\nР’С‹Р±СЂР°РЅ С‚РѕРІР°СЂ: " << nameArr[id - 1] << " = " << priceArr[id - 1];
 	do
 	{
-		std::cout << "\nВведите новую цену: ";
+		std::cout << "\nР’РІРµРґРёС‚Рµ РЅРѕРІСѓСЋ С†РµРЅСѓ: ";
 		std::cin >> newPrice;
 
 
 	} while (newPrice < 0.01 || newPrice > 30000.0);
 	priceArr[id - 1] = newPrice;
-	std::cout << "\nЦена успешно изменена!\n\n";
+	std::cout << "\nР¦РµРЅР° СѓСЃРїРµС€РЅРѕ РёР·РјРµРЅРµРЅР°!\n\n";
 }
 void Start()
 {
-	std::cout << "\t\tДобро пожаловать в Магазин профессионалных игровых гарнитур < RAVE > " << "\n" << "\n";
+	std::cout << "\t\tР”РѕР±СЂРѕ РїРѕР¶Р°Р»РѕРІР°С‚СЊ РІ РњР°РіР°Р·РёРЅ РїСЂРѕС„РµСЃСЃРёРѕРЅР°Р»РЅС‹С… РёРіСЂРѕРІС‹С… РіР°СЂРЅРёС‚СѓСЂ < RAVE > " << "\n" << "\n";
 
 	std::string adminLogin = "1";
 	std::string adminPassword = "1";
@@ -87,14 +88,14 @@ void Start()
 	bool exit = false;
 	do
 	{
-		std::cout << "Введите логин: ";
+		std::cout << "Р’РІРµРґРёС‚Рµ Р»РѕРіРёРЅ: ";
 		std::getline(std::cin, login);
-		std::cout << "Введите пароль: ";
+		std::cout << "Р’РІРµРґРёС‚Рµ РїР°СЂРѕР»СЊ: ";
 		std::getline(std::cin, password);
 		if (login != adminLogin || password != adminPassword)
 		{
-			std::cerr << "Неверный логин или пароль\n";
-			std::cout << "Попробовать еще раз?\n1 - Да\n - Выход из программы\n";
+			std::cerr << "РќРµРІРµСЂРЅС‹Р№ Р»РѕРіРёРЅ РёР»Рё РїР°СЂРѕР»СЊ\n";
+			std::cout << "РџРѕРїСЂРѕР±РѕРІР°С‚СЊ РµС‰Рµ СЂР°Р·?\n1 - Р”Р°\n - Р’С‹С…РѕРґ РёР· РїСЂРѕРіСЂР°РјРјС‹\n";
 			std::cin >> choose;
 			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 			if (choose == 2)
@@ -108,7 +109,7 @@ void Start()
 			int chooseStorageType;
 			do
 			{
-				std::cout << "Введите формат склада: \n1 - готовый склад\n2 - создать склад вручную: " << "\n";
+				std::cout << "Р’РІРµРґРёС‚Рµ С„РѕСЂРјР°С‚ СЃРєР»Р°РґР°: \n1 - РіРѕС‚РѕРІС‹Р№ СЃРєР»Р°Рґ\n2 - СЃРѕР·РґР°С‚СЊ СЃРєР»Р°Рґ РІСЂСѓС‡РЅСѓСЋ: " << "\n";
 				std::cin >> chooseStorageType;
 			} while (chooseStorageType < 1 || chooseStorageType > 2);
 			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -119,7 +120,7 @@ void Start()
 			}
 			else if (chooseStorageType == 2)
 			{
-				std::cout << "В РАЗРАБОТКЕ \n";
+				std::cout << "Р’ Р РђР—Р РђР‘РћРўРљР• \n";
 			}
 			else
 			{
@@ -176,14 +177,14 @@ void Shop()
 		int choose;
 		do
 		{
-			std::cout << "\n1 - Показать склад\n";
-			std::cout << "2 - Начать продажу\n";
-			std::cout << "3 - Изменить цену\n";
-			std::cout << "4 - Списать товар\n";
-			std::cout << "5 - Пополнить товар\n";
-			std::cout << "6 - Изменение склада\n";
-			std::cout << "7 - Показать кассу\n";
-			std::cout << "0 - Закончить смену\n";
+			std::cout << "\n1 - РџРѕРєР°Р·Р°С‚СЊ СЃРєР»Р°Рґ\n";
+			std::cout << "2 - РќР°С‡Р°С‚СЊ РїСЂРѕРґР°Р¶Сѓ\n";
+			std::cout << "3 - РР·РјРµРЅРёС‚СЊ С†РµРЅСѓ\n";
+			std::cout << "4 - РЎРїРёСЃР°С‚СЊ С‚РѕРІР°СЂ\n";
+			std::cout << "5 - РџРѕРїРѕР»РЅРёС‚СЊ С‚РѕРІР°СЂ\n";
+			std::cout << "6 - РР·РјРµРЅРµРЅРёРµ СЃРєР»Р°РґР°\n";
+			std::cout << "7 - РџРѕРєР°Р·Р°С‚СЊ РєР°СЃСЃСѓ\n";
+			std::cout << "0 - Р—Р°РєРѕРЅС‡РёС‚СЊ СЃРјРµРЅСѓ\n";
 			std::cin >> choose;
 		} while (choose < 0 || choose > 7);
 		if (choose == 1)
@@ -247,12 +248,17 @@ void CreateStorage()
 }
 void PrintReceipt()
 {
-	std::cout << "\tНазвание\t\tКол-во\tЦена\n";
+	std::cout << "\t\t" << "\t\tРћРћРћ Lunacy.ru\n\n" << "\n\n";
+	std::cout << "\tРўРѕРІР°СЂ\t\t\tРљРѕР»-РІРѕ\tР¦РµРЅР°\n";
 	for (int i = 0; i < receiptSize; i++)
 	{
 		std::cout << "" << nameReceiptArr[i] << "" << CountReceiptArr[i] << "\t" << priceReceiptArr[i] << "\n";
+		std::cout << "\n============================================\n";
+		std::cout << "РРўРћР“\t\t\t\t\t=" << priceReceiptArr[i];
 	}
-	std::cout << "\n";
+	std::cout << "\n" << "\n\n";
+	ApplyDiscounts(totalSum);
+	std::cout << "\n" << "\t\t" << "\t\tРЎРїР°СЃРёР±Рѕ Р·Р° РїРѕРєСѓРїРєСѓ!\n";
 }
 void RemoveFromStorage()
 {
@@ -261,21 +267,21 @@ void RemoveFromStorage()
 		int count;
 		do
 		{
-			std::cout << "Введите Id товара для списания: ";
+			std::cout << "Р’РІРµРґРёС‚Рµ Id С‚РѕРІР°СЂР° РґР»СЏ СЃРїРёСЃР°РЅРёСЏ: ";
 			std::cin >> id;
 
 
 		} while (id < 1 || id > idArr[size - 1]);
-		std::cout << "\n\nВыбран товар: " << nameArr[id - 1] << " = " << CountArr[id - 1] << "Штук\n\n";
+		std::cout << "\n\nР’С‹Р±СЂР°РЅ С‚РѕРІР°СЂ: " << nameArr[id - 1] << " = " << CountArr[id - 1] << "РЁС‚СѓРє\n\n";
 		do
 		{
-			std::cout << "\nВведите кол-во товара: ";
+			std::cout << "\nР’РІРµРґРёС‚Рµ РєРѕР»-РІРѕ С‚РѕРІР°СЂР°: ";
 			std::cin >> count;
 
 
 		} while (count < 0 || count  > CountArr[id - 1]);
 		CountArr[id - 1] -= CountArr[id - 1];
-		std::cout << "\nТовар успешно списан!";
+		std::cout << "\nРўРѕРІР°СЂ СѓСЃРїРµС€РЅРѕ СЃРїРёСЃР°РЅ!";
 	}
 }
 void AddToStorage()
@@ -285,21 +291,21 @@ void AddToStorage()
 		int count;
 		do
 		{
-			std::cout << "Введите Id товара для пополнения: ";
+			std::cout << "Р’РІРµРґРёС‚Рµ Id С‚РѕРІР°СЂР° РґР»СЏ РїРѕРїРѕР»РЅРµРЅРёСЏ: ";
 			std::cin >> id;
 
 
 		} while (id < 1 || id > idArr[size - 1]);
-		std::cout << "\n\nВыбран товар: " << nameArr[id - 1] << " = " << priceArr[id - 1];
+		std::cout << "\n\nР’С‹Р±СЂР°РЅ С‚РѕРІР°СЂ: " << nameArr[id - 1] << " = " << priceArr[id - 1];
 		do
 		{
-			std::cout << "\nПополнить: ";
+			std::cout << "\nРџРѕРїРѕР»РЅРёС‚СЊ: ";
 			std::cin >> count;
 
 
 		} while (count < 0 || count > 1000);
 		priceArr[id + 1] = count;
-		std::cout << "\nУспешно пополнено!";
+		std::cout << "\nРЈСЃРїРµС€РЅРѕ РїРѕРїРѕР»РЅРµРЅРѕ!";
 	}
 }
 void ChangeStorage()
@@ -307,9 +313,9 @@ void ChangeStorage()
 	int choose;
 	do
 	{
-		std::cout << "1 - Добавить товар в склад\n";
-		std::cout << "2 - Убрать товар из склада\n";
-		std::cout << "0 - Выход\n";
+		std::cout << "1 - Р”РѕР±Р°РІРёС‚СЊ С‚РѕРІР°СЂ РІ СЃРєР»Р°Рґ\n";
+		std::cout << "2 - РЈР±СЂР°С‚СЊ С‚РѕРІР°СЂ РёР· СЃРєР»Р°РґР°\n";
+		std::cout << "0 - Р’С‹С…РѕРґ\n";
 		std::cin >> choose;
 	} while (choose < 0 || choose > 2);
 	if (choose == 1)
@@ -322,7 +328,7 @@ void ChangeStorage()
 	}
 	else
 	{
-		std::cout << "Выход";
+		std::cout << "Р’С‹С…РѕРґ";
 	}
 }
 void AddElementToEnd()
@@ -358,12 +364,12 @@ void AddElementToEnd()
 		priceArr[i] = priceArrTemp[i];
 	}
 	idArr[size - 1] = size - 1;
-	std::cout << "Введите имя нового товара: \n";
+	std::cout << "Р’РІРµРґРёС‚Рµ РёРјСЏ РЅРѕРІРѕРіРѕ С‚РѕРІР°СЂР°: \n";
 	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	std::getline(std::cin, nameArr[size - 1], '\n');
-	std::cout << "Введите кол-во нового товара: \n";
+	std::cout << "Р’РІРµРґРёС‚Рµ РєРѕР»-РІРѕ РЅРѕРІРѕРіРѕ С‚РѕРІР°СЂР°: \n";
 	std::cin >> CountArr[size - 1];
-	std::cout << "\nВведите цену нового товара: \n";
+	std::cout << "\nР’РІРµРґРёС‚Рµ С†РµРЅСѓ РЅРѕРІРѕРіРѕ С‚РѕРІР°СЂР°: \n";
 	std::cin >> priceArr[size - 1];
 	delete[]idArrTemp;
 	delete[]nameArrTemp;
@@ -396,7 +402,7 @@ void DeleteElementByIndex()
 	int index = 0;
 	do
 	{
-		std::cout << "Введите Id товара для удаления: ";
+		std::cout << "Р’РІРµРґРёС‚Рµ Id С‚РѕРІР°СЂР° РґР»СЏ СѓРґР°Р»РµРЅРёСЏ: ";
 		std::cin >> index;
 
 	} while (index < 1 || index > size);
@@ -432,7 +438,7 @@ void DeleteElementByIndex()
 void CashStatus()
 {
 	totalIncome = cashIncome + cardIncome;
-	std::cout << "Наличные в кассе: " << cash << "\nВыручка за наличные: " << cashIncome << "\nВыручка по безналу: " << cardIncome << "\n\nИтоговая выручка за смену: " << totalIncome << "\n\n";
+	std::cout << "РќР°Р»РёС‡РЅС‹Рµ РІ РєР°СЃСЃРµ: " << cash << "\nР’С‹СЂСѓС‡РєР° Р·Р° РЅР°Р»РёС‡РЅС‹Рµ: " << cashIncome << "\nР’С‹СЂСѓС‡РєР° РїРѕ Р±РµР·РЅР°Р»Сѓ: " << cardIncome << "\n\nРС‚РѕРіРѕРІР°СЏ РІС‹СЂСѓС‡РєР° Р·Р° СЃРјРµРЅСѓ: " << totalIncome << "\n\n";
 
 }
 void Selling()
@@ -446,20 +452,20 @@ void Selling()
 		totalSum = 0;
 		do
 		{
-			std::cout << "Введите id товара: ";
+			std::cout << "Р’РІРµРґРёС‚Рµ id С‚РѕРІР°СЂР°: ";
 			std::cin >> chooseId;
 			if (chooseId < 1 || chooseId > size)
 			{
-				std::cerr << "Данного товара нет\n";
+				std::cerr << "Р”Р°РЅРЅРѕРіРѕ С‚РѕРІР°СЂР° РЅРµС‚\n";
 				continue;
 			}
 			if (CountArr[chooseId - 1] > 0)
 			{
 				while (true)
 				{
-					std::cout << "\nВыбранный товар: " << nameArr[chooseId - 1] << "\n";
-					std::cout << "Кол-во данного товара складе: " << CountArr[chooseId - 1];
-					std::cout << "Введите кол-во товара: ";
+					std::cout << "\nР’С‹Р±СЂР°РЅРЅС‹Р№ С‚РѕРІР°СЂ: " << nameArr[chooseId - 1] << "\n";
+					std::cout << "РљРѕР»-РІРѕ РґР°РЅРЅРѕРіРѕ С‚РѕРІР°СЂР° СЃРєР»Р°РґРµ: " << CountArr[chooseId - 1];
+					std::cout << "Р’РІРµРґРёС‚Рµ РєРѕР»-РІРѕ С‚РѕРІР°СЂР°: ";
 					std::cin >> chooseCount;
 					if (chooseCount < 1 || chooseCount > CountArr[chooseId - 1])
 					{
@@ -473,11 +479,11 @@ void Selling()
 			}
 			else
 			{
-				std::cerr << "Товара на складе нет\n";
+				std::cerr << "РўРѕРІР°СЂР° РЅР° СЃРєР»Р°РґРµ РЅРµС‚\n";
 				continue;
 			}
-			std::cout << "\n  Товар: " << nameArr[chooseId - 1] << "\t Кол-во: " << chooseCount;
-			std::cout << "\n 1 - Потвердить\n 2 - Отмена: ";
+			std::cout << "\n  РўРѕРІР°СЂ: " << nameArr[chooseId - 1] << "\t РљРѕР»-РІРѕ: " << chooseCount;
+			std::cout << "\n 1 - РџРѕС‚РІРµСЂРґРёС‚СЊ\n 2 - РћС‚РјРµРЅР°: ";
 			std::cin >> confirm;
 			if (confirm == '1')
 			{
@@ -502,8 +508,8 @@ void Selling()
 			{
 				continue;
 			}
-			std::cout << "Купить еще 1 товар?: \n";
-			std::cout << "1 - Да\n2 - Закончить покупки\n";
+			std::cout << "РљСѓРїРёС‚СЊ РµС‰Рµ 1 С‚РѕРІР°СЂ?: \n";
+			std::cout << "1 - Р”Р°\n2 - Р—Р°РєРѕРЅС‡РёС‚СЊ РїРѕРєСѓРїРєРё\n";
 			std::cin >> confirm;
 			if (confirm == '1')
 			{
@@ -513,12 +519,11 @@ void Selling()
 
 		} while (true);
 		PrintReceipt();
-		ApplyDiscounts(totalSum);
 		int pay = 0;
 		std::cout << "\n\n\n";
 		do
 		{
-			std::cout << "1 - Наличные\n2 - Оплата картой\n0 - Меню\n\n";
+			std::cout << "1 - РќР°Р»РёС‡РЅС‹Рµ\n2 - РћРїР»Р°С‚Р° РєР°СЂС‚РѕР№\n0 - РњРµРЅСЋ\n\n";
 			std::cin >> pay;
 		} while (pay < 0 || pay > 2);
 		if (pay == 1)
@@ -536,7 +541,7 @@ void Selling()
 		}
 	}
 }
-	void ApplyDiscounts(int totalSum)
+void ApplyDiscounts(int totalSum)
 	{
 		if (totalSum >= 40000)
 		{
@@ -546,7 +551,7 @@ void Selling()
 		{
 			totalSum -= totalSum * 0.10; 
 		}
-		std::cout << "Итоговая сумма со скидкой: " << totalSum;
+		std::cout << "РС‚РѕРіРѕРІР°СЏ СЃСѓРјРјР° СЃРѕ СЃРєРёРґРєРѕР№: " << totalSum;
 	}
 
 
