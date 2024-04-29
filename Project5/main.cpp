@@ -38,6 +38,11 @@ void AddElementToEnd();
 void DeleteElementByIndex();
 void CashStatus();
 void ApplyDiscounts(int totalSume);
+void CreateStorageManually();
+void AddElementToStorage(int id, const std::string& name, int count, double price);
+void ResizeStorage(size_t newSize);
+void Pause();
+
 int main()
 {
 	setlocale(LC_ALL, "ru");
@@ -49,10 +54,11 @@ int main()
 
 void ShowStorage()
 {
-	std::cout << "ID\tНазвание товара\t\tКол-во\tЦена\n";
+	std::cout << "ID\tНазвание товара\t\t\tКол-во\tЦена\n";
 	for (int i = 0; i < size; i++)
 	{
-		std::cout << idArr[i] << " " << nameArr[i] << "" << CountArr[i] << "  " << "\t" << priceArr[i] << "\n";
+		std::cout << idArr[i] << " "  << "     " << nameArr[i] << " "  << "            " << CountArr[i] << "  " << "       " << "" << priceArr[i] << "\n";
+
 	}
 }
 void ChangePrice()
@@ -95,7 +101,7 @@ void Start()
 		if (login != adminLogin || password != adminPassword)
 		{
 			std::cerr << "Неверный логин или пароль\n";
-			std::cout << "Попробовать еще раз?\n1 - Да\n - Выход из программы\n";
+			std::cout << "Попробовать еще раз?\n1 - Да\n2 - Выход из программы\n";
 			std::cin >> choose;
 			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 			if (choose == 2)
@@ -111,7 +117,8 @@ void Start()
 			{
 				std::cout << "Введите формат склада: \n1 - готовый склад\n2 - создать склад вручную: " << "\n";
 				std::cin >> chooseStorageType;
-			} while (chooseStorageType < 1 || chooseStorageType > 2);
+				Pause();
+			} while (chooseStorageType < 1 || chooseStorageType > 3);
 			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 			if (chooseStorageType == 1)
 			{
@@ -120,12 +127,16 @@ void Start()
 			}
 			else if (chooseStorageType == 2)
 			{
-				std::cout << "В РАЗРАБОТКЕ \n";
+				CreateStorageManually();
+				Shop();
+				
 			}
+		
 			else
 			{
 				std::cerr << "Error chooseStorageType";
 			}
+
 		}
 
 	} while (!exit);
@@ -186,6 +197,7 @@ void Shop()
 			std::cout << "7 - Показать кассу\n";
 			std::cout << "0 - Закончить смену\n";
 			std::cin >> choose;
+			Pause();
 		} while (choose < 0 || choose > 7);
 		if (choose == 1)
 		{
@@ -464,9 +476,10 @@ void Selling()
 				while (true)
 				{
 					std::cout << "\nВыбранный товар: " << nameArr[chooseId - 1] << "\n";
-					std::cout << "Кол-во данного товара складе: " << CountArr[chooseId - 1];
+					std::cout << "Кол-во данного товара на складе: " << CountArr[chooseId - 1] << "\n";
 					std::cout << "Введите кол-во товара: ";
 					std::cin >> chooseCount;
+					Pause();
 					if (chooseCount < 1 || chooseCount > CountArr[chooseId - 1])
 					{
 						std::cerr << "Error\n";
@@ -485,6 +498,7 @@ void Selling()
 			std::cout << "\n  Товар: " << nameArr[chooseId - 1] << "\t Кол-во: " << chooseCount;
 			std::cout << "\n 1 - Потвердить\n 2 - Отмена: ";
 			std::cin >> confirm;
+			Pause();
 			if (confirm == '1')
 			{
 				if (isFirst)
@@ -511,6 +525,7 @@ void Selling()
 			std::cout << "Купить еще 1 товар?: \n";
 			std::cout << "1 - Да\n2 - Закончить покупки\n";
 			std::cin >> confirm;
+			Pause();
 			if (confirm == '1')
 			{
 				continue;
@@ -518,22 +533,24 @@ void Selling()
 			break;
 
 		} while (true);
-		PrintReceipt();
 		int pay = 0;
 		std::cout << "\n\n\n";
 		do
 		{
 			std::cout << "1 - Наличные\n2 - Оплата картой\n0 - Меню\n\n";
 			std::cin >> pay;
+			Pause();
 		} while (pay < 0 || pay > 2);
 		if (pay == 1)
 		{
 			cash += totalIncome;
 			cashIncome += totalSum;
+			PrintReceipt();
 		}
 		else if (pay == 2)
 		{
 			cardIncome += totalSum;
+			PrintReceipt();
 		}
 		else 
 		{
@@ -554,6 +571,89 @@ void ApplyDiscounts(int totalSum)
 		std::cout << "Итоговая сумма со скидкой: " << totalSum;
 	}
 
+void CreateStorageManually() 
+{
+	bool continueInput = true;
+	while (continueInput) 
+	{
+		int id = 10;
+		std::string name;
+		int count;
+		double price;
+
+		std::cout << "Введите ID товара который начинается на число не меньше 10,помните когда будете покупать этот товар то вводите id  на 1 число больше: ";
+		std::cin >> id;
+		std::cout << "Введите название товара: ";
+		std::cin.ignore(); 
+		std::getline(std::cin, name);
+		std::cout << "Введите количество товара: ";
+		std::cin >> count;
+		std::cout << "Введите цену товара не меньше 5000 руб: ";
+		std::cin >> price;
+
+		if (id < 1 || id > 9999 || count < 0 || price <= 4999)
+		{
+			std::cerr << "Некорректные данные. Пожалуйста, попробуйте снова." << std::endl;
+			continue;
+		}
+		Pause();
+
+		AddElementToStorage(id, name, count, price);
+
+
+		char choice;
+		std::cout << "Хотите добавить ещё товары? y - Да\nЛюб кпопка - Нет: ";
+		std::cin >> choice;
+		if (choice != 'y' && choice != 'Y') 
+		{
+			continueInput = false;
+		}
+	}
+}
+
+void AddElementToStorage(int id, const std::string& name, int count, double price)
+{
+
+	size_t newSize = id + 2;
+	if (newSize > size) 
+	{
+		ResizeStorage(newSize);
+	}
+
+	idArr[id] = id;
+	nameArr[id] = name;
+	CountArr[id] = count;
+	priceArr[id] = price;
+}
+
+void ResizeStorage(size_t newSize) 
+{
+
+	int* tempId  = new int[newSize];
+	std::string* tempName = new std::string[newSize];
+	int* tempCount = new int[newSize];
+	double* tempPrice = new double[newSize];
+
+	for (size_t i = 0; i < size; ++i) 
+	{
+		tempId[i] = idArr[i];
+		tempName[i] = nameArr[i];
+		tempCount[i] = CountArr[i];
+		tempPrice[i] = priceArr[i];
+	}
+
+	delete[]idArr;
+	delete[]nameArr;
+	delete[]CountArr;
+	delete[]priceArr;
+
+	idArr = tempId;
+	nameArr = tempName;
+	CountArr = tempCount;
+	priceArr = tempPrice;
+
+	size = newSize;
+}
 
 
 	template<typename Arr>
@@ -563,4 +663,11 @@ void ApplyDiscounts(int totalSum)
 		{
 			dinArr[i] = staticArr[i];
 		}
+	}
+
+	void Pause() 
+	{
+		std::cout << "Нажмите Enter для продолжения...";
+		std::cin.ignore();
+		std::cin.get();
 	}
