@@ -270,7 +270,9 @@ void PrintReceipt()
 	}
 	std::cout << "\n" << "\n\n";
 	ApplyDiscounts(totalSum);
-	std::cout << "\n" << "\t\t" << "\t\tСпасибо за покупку!\n";
+	std::cout << "\n" << "\t\t" << "\t\tСпасибо за покупку!\n\n\n";
+	Shop();
+	
 }
 void RemoveFromStorage()
 {
@@ -329,6 +331,7 @@ void ChangeStorage()
 		std::cout << "2 - Убрать товар из склада\n";
 		std::cout << "0 - Выход\n";
 		std::cin >> choose;
+		Pause();
 	} while (choose < 0 || choose > 2);
 	if (choose == 1)
 	{
@@ -416,6 +419,7 @@ void DeleteElementByIndex()
 	{
 		std::cout << "Введите Id товара для удаления: ";
 		std::cin >> index;
+		Pause();
 
 	} while (index < 1 || index > size);
 	for (int i = 0, g = 0; g < size, i < size; g++, i++)
@@ -614,7 +618,7 @@ void CreateStorageManually()
 void AddElementToStorage(int id, const std::string& name, int count, double price)
 {
 
-	size_t newSize = id + 2;
+	size_t newSize = id  + 1;
 	if (newSize > size) 
 	{
 		ResizeStorage(newSize);
